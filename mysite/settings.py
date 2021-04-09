@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'tour.apps.TourConfig',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static') #BASE_DIR là đường dẫn đến folder chứa project, sau đó trỏ đến thư mục static. Nhớ imoprt os
+]                                    #Sau khi khai báo cái này, ta có thể {% load static %} ở template và gọi đến thư mục static
