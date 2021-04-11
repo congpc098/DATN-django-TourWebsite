@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .models import *
 # Create your views here.
 
 
@@ -18,7 +18,9 @@ def contact(request):
 
 
 def destination(request):
+    destinations = Destination.objects.all()
     context = {
+        'destinations': destinations,
         'title': 'Điểm Đến - Vietravel',
     }
     return render(request, 'destinations.html', context)
@@ -29,3 +31,10 @@ def index(request):
         'title': 'Trang Chủ - Vietravel',
     }
     return render(request, 'index.html', context)
+
+
+def booking(request):
+    context = {
+        'title': 'Đặt Tour - Vietravel',
+    }
+    return render(request, 'booking.html', context)
