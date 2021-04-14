@@ -66,7 +66,7 @@ class Tour(models.Model):
 
 class ImageTour(models.Model):
     image = models.ImageField(null=True, blank=True)
-    tour = models.ForeignKey(Tour, on_delete=models.CASCADE, related_name='images')
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.image.url
@@ -105,3 +105,11 @@ class Book(models.Model):
 class Banner(models.Model):
     image = models.ImageField(blank=True, null=True)
     show = models.BooleanField(default=True)
+
+    @property  # tránh bị lỗi trang nếu như một ảnh bị xoá
+    def imageURL(self):  # giờ đây nó sẽ chỉ hiển thị một khung ảnh trống trên template
+        try:  # trên template thay destination.image.url = destination.imageURL
+            url = self.image.url
+        except:
+            url = ''
+        return url

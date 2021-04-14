@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- about breadcrumb -->
+<section class="w3l-about-breadcrumb text-left">
+  <div class="breadcrumb-bg breadcrumb-bg-about py-sm-5 py-4">
+    <div class="container">
+      <h2 class="title">Chi tiết tour </h2>
+      <ul class="breadcrumbs-custom-path mt-2">
+        <li><a href="{% url 'index' %}">Trang Chủ</a></li>
+        <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> Tour </li>
+        <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> {{tour.departure_place}} -> {{tour.destination.name}} </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- //about breadcrumb -->
+<!--  Work gallery section -->
+<section class="grids-1 py-5">
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col">
+        <h3>Chi tiết tour du lịch: </h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        {% for photo in tour.imagetour_set.all %}
+        <div class="img-banner">
+          <img src="{{ photo.imageURL }}" alt="" style="max-width: 100%;">
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="card p-5">
+          <form action="# " method="POST">
+            {% csrf_token %}
+            <div>
+              <span>Ngày khởi hành: {{tour.departure_date|date:'d/m/Y'}} </span>
+            </div>
+            <div class="mt-1">
+              <span>Số ngày: {{tour.num_days}} </span>
+            </div>
+            <div class="mt-1">
+              <span>Nơi Khởi Hành: {{tour.departure_place}} </span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>
+                <p style="color: red;font-weight: bold;"> {{tour.price}}đ/người</p>
+                <span>Số chỗ còn nhận: <span style="color: red;">{{tour.num_seats}}</span></span>
+              </div>
+              <div>
+                <button class="btn btn-danger">Đặt tour</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col">
+        <div class="container" style="background-color: rgb(221, 204, 204);">
+          <h4 class="p-3">CHƯƠNG TRÌNH TOUR DU LỊCH</h4>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="container card p-2">
+          <p>{{ object.moTa }}</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--  //Work gallery section -->
+<!-- grids block 5 -->
+
+{% endblock content %}
