@@ -122,5 +122,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static') #BASE_DIR là đường dẫn đến folder chứa project, sau đó trỏ đến thư mục static. Nhớ imoprt os
-]                                    #Sau khi khai báo cái này, ta có thể {% load static %} ở template và gọi đến thư mục static
+    os.path.join(BASE_DIR, 'static')  # BASE_DIR là đường dẫn đến folder chứa project, sau đó trỏ đến thư mục static. Nhớ imoprt os
+]  # Sau khi khai báo cái này, ta có thể {% load static %} ở template và gọi đến thư mục static
+
+MEDIA_URL = '/images/'  # set URL cho images để có thể render trên web, sau đó set path bên url.py
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')  # tự động lưu file ảnh được upload lên DATABASE vào folder images
