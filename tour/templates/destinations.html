@@ -50,9 +50,9 @@
           {% for d in destinations %}
           <div class="col-lg-4 col-md-4 col-6 mt-md-4 mt-4">
             <div class="column">
-              <a href="blog-single.html"><img src="{% static 'images/g3.jpg' %}" alt="" class="img-fluid"></a>
+              <a href="{{ d.get_absolute_url }}"><img src="{{d.imageURL}}" alt="" class="img-fluid"></a>
               <div class="info">
-                <h4><a href="blog-single.html">{{ d.name }}</a></h4>
+                <h4><a href="{{ d.get_absolute_url }}">{{ d.name }}</a></h4>
                 <div class="dst-btm">
                   <h6 class="">Chỉ từ </h6>
                   <span>$1650</span>

@@ -26,25 +26,25 @@
       <div class="row bottom-ab-grids">
 
         {% for tour in tours %}
-        <div class="col-lg-6 subject-card mt-4">
+        <div class="col-12 subject-card mt-4">
           <div class="subject-card-header p-4">
             <a href="{% url 'tour-detail' tour.id %}" class="card_title p-lg-4d-block">
               <div class="row align-items-center">
-                <div class="col-sm-5 subject-img">
+                <div class="col-6">
                   {% with tour.imagetour_set.all|first as image %}         <!--lấy item đầu tiền trong ds các item liên quan đến tour này-->
-                  <img src="{{ image.imageURL }}" class="img-fluid">
+                  <img src="{{ image.imageURL }}" class="img-fluid" style="max-width: 100%;object-fit: cover">
                   {% endwith %}
                 </div>
-                <div class="col-sm-7 subject-content mt-sm-0 mt-4">
+                <div class="col-6 subject-content mt-sm-0 mt-4">
                   <h4>{{ tour.visit_places }} </h4>
                   <div class="dst-btm">
-                    <h6 class=""> Start From <span style="padding-left:15px">$1350</span> </h6> </br>
+                    <h6 class=""> Giá: <span style="padding-left:10px">{{tour.price}}đ</span> </h6> </br>
                     <h6 class=""> Số chỗ: {{tour.num_seats}} </h6>
                     <h6 class=""> Số ngày: {{tour.num_days}} </h6>
                     <h6 class=""> Ngày khởi hành: {{tour.departure_date|date:'d/m/Y'}} </h6>
                     <h6 class=""> Nơi khởi hành: {{tour.departure_place}} </h6>
                   </div>
-                  <p class="sub-para">Per person on twin sharing</p>
+                  <p class="sub-para">Bao gồm khách sạn và ăn sáng</p>
                 </div>
               </div>
             </a>
@@ -56,7 +56,6 @@
     </div>
   </section>
   <!--//grids-->
-
   <!-- testimonials -->
   <section class="w3l-clients" id="clients">
     <!-- /grids -->

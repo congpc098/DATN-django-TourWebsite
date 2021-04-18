@@ -54,7 +54,6 @@ class Tour(models.Model):
     departure_place = models.CharField(max_length=200)
     visit_places = models.CharField(max_length=200, null=True, blank=True)
     price = models.DecimalField(max_digits=8, decimal_places=0)
-    hot = models.BooleanField(default=False)
     num_seats = models.SmallIntegerField()
     departure_date = models.DateField()
     num_days = models.SmallIntegerField()
@@ -85,7 +84,7 @@ class Schedule(models.Model):
     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.tour)
+        return str(self.id)
 
 
 class Book(models.Model):
@@ -96,20 +95,7 @@ class Book(models.Model):
     tour = models.ForeignKey(Tour, on_delete=models.SET_NULL, blank=True, null=True)
     number_people = models.SmallIntegerField()
     total_pay = models.DecimalField(max_digits=15, decimal_places=0)
-    date_booked = models.DateTimeField(auto_now_add=True)
+    date_booked = models.DateTimeField(auto_now_add=True)  # auto_now_add sẽ tự động thêm datetime tại thời điểm đối tượng đc thêm / auto_now sẽ tự thay đổi datetime hiện tại mỗi khi đối tượng đc save
 
     def __str__(self):
         return str(self.id)
-
-
-class Banner(models.Model):
-    image = models.ImageField(blank=True, null=True)
-    show = models.BooleanField(default=True)
-
-    @property  # tránh bị lỗi trang nếu như một ảnh bị xoá
-    def imageURL(self):  # giờ đây nó sẽ chỉ hiển thị một khung ảnh trống trên template
-        try:  # trên template thay destination.image.url = destination.imageURL
-            url = self.image.url
-        except:
-            url = ''
-        return url

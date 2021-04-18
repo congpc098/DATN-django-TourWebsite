@@ -10,7 +10,8 @@
       <ul class="breadcrumbs-custom-path mt-2">
         <li><a href="{% url 'index' %}">Trang Chủ</a></li>
         <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> Tour </li>
-        <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> {{tour.departure_place}} -> {{tour.destination.name}} </li>
+        <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> {{tour.departure_place}} ->
+          {{tour.destination.name}} </li>
       </ul>
     </div>
   </div>
@@ -27,35 +28,56 @@
     <div class="row">
       <div class="col-12 col-md-6">
         {% for photo in tour.imagetour_set.all %}
-        <div class="img-banner">
-          <img src="{{ photo.imageURL }}" alt="" style="max-width: 100%;">
+        <div class="img-banner mt-1">
+          <a href="{{ photo.imageURL }}"><img src="{{ photo.imageURL }}" alt="" style="max-width: 100%;"></a>
         </div>
         {% endfor %}
       </div>
       <div class="col-12 col-md-6">
-        <div class="card p-5">
-          <form action="# " method="POST">
-            {% csrf_token %}
+        <div class="card p-3">
+          <div>
+            <span>Ngày khởi hành: {{tour.departure_date|date:'d/m/Y'}} </span>
+          </div>
+          <div class="mt-1">
+            <span>Nơi Khởi Hành: {{tour.departure_place}} </span>
+          </div>
+          <div class="mt-1">
+            <span>Số ngày: {{tour.num_days}} </span>
+          </div>
+          <div class="d-flex justify-content-between">
             <div>
-              <span>Ngày khởi hành: {{tour.departure_date|date:'d/m/Y'}} </span>
+              <p id="price" style="color: red;font-weight: bold;"> {{tour.price}}đ/người</p>
+              <span>Số chỗ còn nhận: <span style="color: red;">{{tour.num_seats}}</span></span>
             </div>
-            <div class="mt-1">
-              <span>Số ngày: {{tour.num_days}} </span>
+          </div>
+        </div>
+        <div class="card p-2">
+          <form method="POST" action="">
+          {% csrf_token %}
+            <h4 class="p-2 text-center">Đặt tour ngay</h4>
+            <input type="hidden" name="toud-id" value="{{tour.id}}">
+            <div class="form-group">
+              <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Tên của bạn">
             </div>
-            <div class="mt-1">
-              <span>Nơi Khởi Hành: {{tour.departure_place}} </span>
+            <div class="form-group">
+              <input type="text" class="form-control" name="InputPhone" id="InputPhone" placeholder="Số điện thoại">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" name="InputAddress" id="InputAddress" placeholder="Địa chỉ">
+            </div>
+            <div class="form-group">
+              <input type="number" min="1" max="{{tour.num_seats}}" class="form-control" name="InputPeople" id="inputPeople"
+                placeholder="Số người">
             </div>
             <div class="d-flex justify-content-between">
-              <div>
-                <p style="color: red;font-weight: bold;"> {{tour.price}}đ/người</p>
-                <span>Số chỗ còn nhận: <span style="color: red;">{{tour.num_seats}}</span></span>
-              </div>
-              <div>
-                <button class="btn btn-danger">Đặt tour</button>
-              </div>
+              <label>Tổng tiền: <span id="total" style="color: red; font-weight: bold"></span></label>
+              <button type="submit" class="btn btn-danger ">Đặt tour</button>
             </div>
           </form>
         </div>
+        {% comment %} <div class="container" style="background-color: rgb(221, 204, 204);">
+          <h4 class="p-3 text-center mt-2">CHƯƠNG TRÌNH TOUR DU LỊCH</h4>
+        </div> {% endcomment %}
       </div>
     </div>
   </div>
@@ -63,21 +85,32 @@
     <div class="row">
       <div class="col">
         <div class="container" style="background-color: rgb(221, 204, 204);">
-          <h4 class="p-3">CHƯƠNG TRÌNH TOUR DU LỊCH</h4>
+          <h4 class="p-3 text-center">LỊCH TRÌNH TOUR</h4>
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col">
+        {% for x in tour.schedule_set.all %}
         <div class="container card p-2">
-          <p>{{ object.moTa }}</p>
-
+          <h4>Ngày {{ forloop.counter }}</h4>
+          <p>{{ x.activity|linebreaks }}</p>
         </div>
+        {% endfor %}
       </div>
     </div>
   </div>
 </section>
 <!--  //Work gallery section -->
 <!-- grids block 5 -->
+<script>
+  document.getElementById("inputPeople").addEventListener('change', ()=>{
+    let a = document.getElementById("price").textContent;
+    let b = (a.slice(0,a.indexOf('đ'))).replaceAll(',','');
+    let c =  (document.getElementById("inputPeople").value) * b;
+    console.log(c);
+    document.getElementById("total").innerHTML = Number((parseInt(c)).toFixed(1)).toLocaleString() + 'đ'; 
+  });
+</script>
 
 {% endblock content %}
