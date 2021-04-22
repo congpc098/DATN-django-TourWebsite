@@ -1,6 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
+from django.http import HttpResponseRedirect
 from django.views.generic import (ListView, DetailView)
+# sending email
+from django.conf import settings
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string  # render template to body of email
 # Create your views here.
 
 
@@ -56,13 +61,39 @@ def tour_detail(request, pk):
     context = {
         'title': 'Chi tiết Tour - Vietravel',
         'tour': tour,
-
     }
+    if request.method == "POST":
+        name = request.POST['inputName']
+        phone = request.POST['inputPhone']
+        email = request.POST['inputEmail']
+        address = request.POST['inputAddress']
+        people = request.POST['inputPeople']
+        total = tour.price*int(people)
+        book = Book(customer_name=name, customer_phone=phone, customer_email=email, custumer_addess=address, tour=tour, number_people=people, total_pay=total)
+        book.save()
+        request.session['customer_email'] = email
+        request.session['tour_id'] = pk
+        return redirect('book-successful')
+
     return render(request, 'tour_detail.html', context)
 
 
-def booking(request):
+def book_successful(request):
+    customer_email = request.session.get('customer_email')
+    tour_id = request.session.get('tour_id')
+    tour = Tour.objects.get(id=tour_id)
+    template = render_to_string('template_email.html', {'tour_name': tour.visit_places, 'date': tour.departure_date})
+
+    email = EmailMessage(
+        'Vietravel - Đơn đặt tour',
+        template,
+        settings.EMAIL_HOST_USER,
+        [customer_email]
+    )
+    email.fail_silently = False
+    email.send()
+
     context = {
-        'title': 'Đặt Tour - Vietravel',
+        'title': 'Cảm ơn bạn - Vietravel',
     }
-    return render(request, 'booking.html', context)
+    return render(request, 'book_successful.html', context)

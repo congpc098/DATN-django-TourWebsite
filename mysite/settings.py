@@ -129,3 +129,11 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/images/'  # set URL cho images để có thể render trên web, sau đó set path bên url.py
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')  # tự động lưu file ảnh được upload lên DATABASE vào folder images
+
+# STMP Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'phamcong.k31@gmail.com'
+EMAIL_HOST_PASSWORD = 'Dpwgmj102'

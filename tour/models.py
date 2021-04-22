@@ -88,14 +88,18 @@ class Schedule(models.Model):
 
 
 class Book(models.Model):
+    tour = models.ForeignKey(Tour, on_delete=models.SET_NULL, blank=True, null=True)
     customer_name = models.CharField(max_length=200)
     customer_phone = models.CharField(max_length=15)
     customer_email = models.EmailField(max_length=200)
     custumer_addess = models.CharField(max_length=200)
-    tour = models.ForeignKey(Tour, on_delete=models.SET_NULL, blank=True, null=True)
     number_people = models.SmallIntegerField()
     total_pay = models.DecimalField(max_digits=15, decimal_places=0)
     date_booked = models.DateTimeField(auto_now_add=True)  # auto_now_add sẽ tự động thêm datetime tại thời điểm đối tượng đc thêm / auto_now sẽ tự thay đổi datetime hiện tại mỗi khi đối tượng đc save
 
-    def __str__(self):
-        return str(self.id)
+    # def save(self, *args, **kwargs):
+    #     self.total_pay = self.tour.price * self.number_people
+    #     super(Book, self).save(*args, **kwargs)
+
+    # def __str__(self):
+    #     return str(self.id)

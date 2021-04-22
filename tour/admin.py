@@ -16,7 +16,11 @@ class TourAdmin(admin.ModelAdmin):
     inlines = [ImageTourInline, ScheduleInline]
 
 
+class BookAdmin(admin.ModelAdmin):
+    readonly_fields = ('date_booked',)
+
+
 admin.site.register(Destination)
 admin.site.register(TourGuide)
 admin.site.register(Tour, TourAdmin)
-admin.site.register(Book)
+admin.site.register(Book, BookAdmin)

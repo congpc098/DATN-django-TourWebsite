@@ -52,22 +52,25 @@
           </div>
         </div>
         <div class="card p-2">
-          <form method="POST" action="">
+          <form action="" method="POST" >
           {% csrf_token %}
             <h4 class="p-2 text-center">Đặt tour ngay</h4>
             <input type="hidden" name="toud-id" value="{{tour.id}}">
             <div class="form-group">
-              <input type="text" class="form-control" name="InputName" id="InputName" placeholder="Tên của bạn">
+              <input type="text" class="form-control" name="inputName" id="inputName" placeholder="Tên của bạn" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="InputPhone" id="InputPhone" placeholder="Số điện thoại">
+              <input type="text" class="form-control" name="inputPhone" id="inputPhone" placeholder="Số điện thoại" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="InputAddress" id="InputAddress" placeholder="Địa chỉ">
+              <input type="email" class="form-control" name="inputEmail" id="inputEmail" placeholder="Email" required>
             </div>
             <div class="form-group">
-              <input type="number" min="1" max="{{tour.num_seats}}" class="form-control" name="InputPeople" id="inputPeople"
-                placeholder="Số người">
+              <input type="text" class="form-control" name="inputAddress" id="inputAddress" placeholder="Địa chỉ" required>
+            </div>
+            <div class="form-group">
+              <input type="number" min="1" max="{{tour.num_seats}}" class="form-control" name="inputPeople" id="inputPeople"
+                placeholder="Số người" required>
             </div>
             <div class="d-flex justify-content-between">
               <label>Tổng tiền: <span id="total" style="color: red; font-weight: bold"></span></label>
