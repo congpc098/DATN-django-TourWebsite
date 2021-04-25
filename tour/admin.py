@@ -20,7 +20,12 @@ class BookAdmin(admin.ModelAdmin):
     readonly_fields = ('date_booked',)
 
 
+class FeedbackAdmin(admin.ModelAdmin):
+    readonly_fields = ('date',)
+
+
 admin.site.register(Destination)
 admin.site.register(TourGuide)
 admin.site.register(Tour, TourAdmin)
 admin.site.register(Book, BookAdmin)
+admin.site.register(Feedback, FeedbackAdmin)

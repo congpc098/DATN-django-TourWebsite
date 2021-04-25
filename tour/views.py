@@ -18,9 +18,20 @@ def about(request):
 
 
 def contact(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        email = request.POST['email']
+        subject = request.POST['subject']
+        message = request.POST['message']
+        feedback = Feedback(cus_name=name, cus_email=email, subject=subject, message=message)
+        feedback.save()
+        msg = "'Bạn đã gửi phản hồi thành công! Chúng tôi sẽ trả lời bạn trong 24h.'"
+
+        return render(request, 'contact.html', {'msg': msg, 'title': 'Liên Hệ - Vietravel', 'active4': 'active'})
+
     context = {
         'title': 'Liên Hệ - Vietravel',
-        'active4': 'active'
+        'active4': 'active',
     }
     return render(request, 'contact.html', context)
 
