@@ -15,23 +15,21 @@
               <h3>Công ty tổ chức tour du lịch chuyên nghiệp.</h3>
               <h6 class="mb-3">Khám phá cuộc phiêu lưu tiếp theo của bạn tại đây</h6>
               <div class="flex-wrap search-wthree-field mt-md-5 mt-4">
-                <form action="#" method="post" class="booking-form">
+
+                <form action="{% url 'search'  %}" method="GET" class="booking-form">
                   <div class="row book-form">
                     <div class="form-input col-md-4 mt-md-0 mt-3">
+
                       <select name="selectpicker" class="selectpicker">
                         <option value="">Điểm Đến</option>
-                        <option value="africa">Africa</option>
-                        <option value="america">America</option>
-                        <option value="asia">Asia</option>
-                        <option value="eastern-europe">Eastern Europe</option>
-                        <option value="europe">Europe</option>
-                        <option value="south-america">South America</option>
+                        {% for d in destinations %}
+                        <option value="{{d}}">{{d}}</option>
+                        {% endfor %}
                       </select>
-
+                      
                     </div>
                     <div class="form-input col-md-4 mt-md-0 mt-3">
-
-                      <input type="date" name="" placeholder="Date" required="">
+                      <input type="date" name="selectdate" placeholder="Date">
                     </div>
                     <div class="bottom-btn col-md-4 mt-md-0 mt-3">
                       <button class="btn btn-style btn-secondary"><span class="fa fa-search mr-3"
@@ -39,6 +37,7 @@
                     </div>
                   </div>
                 </form>
+
               </div>
             </div>
           </div>
@@ -229,7 +228,7 @@
                     amet adipisicing elit. Laborum dolor facere ipsum adipisicingelit.
                   </blockquote>
                   <div class="testi-des">
-                    <div class="test-img"><img src="assets/images/c1.jpg" class="img-fluid" alt="client-img">
+                    <div class="test-img"><img src="{% static 'images/c1.jpg' %}" class="img-fluid" alt="client-img">
                     </div>
                     <div class="peopl align-self">
                       <h3>Rohit Paul</h3>
@@ -249,7 +248,7 @@
                     amet adipisicing elit. Laborum dolor facere ipsum adipisicingelit.
                   </blockquote>
                   <div class="testi-des">
-                    <div class="test-img"><img src="assets/images/c2.jpg" class="img-fluid" alt="client-img">
+                    <div class="test-img"><img src="{% static 'images/c2.jpg' %}" class="img-fluid" alt="client-img">
                     </div>
                     <div class="peopl align-self">
                       <h3>Shveta</h3>
@@ -269,7 +268,7 @@
                     amet adipisicing elit. Laborum dolor facere ipsum adipisicingelit.
                   </blockquote>
                   <div class="testi-des">
-                    <div class="test-img"><img src="assets/images/c3.jpg" class="img-fluid" alt="client-img">
+                    <div class="test-img"><img src="{% static 'images/c3.jpg' %}" class="img-fluid" alt="client-img">
                     </div>
                     <div class="peopl align-self">
                       <h3>Roy Linderson</h3>
@@ -289,7 +288,7 @@
                     amet adipisicing elit. Laborum dolor facere ipsum adipisicingelit.
                   </blockquote>
                   <div class="testi-des">
-                    <div class="test-img"><img src="assets/images/c4.jpg" class="img-fluid" alt="client-img">
+                    <div class="test-img"><img src="{% static 'images/c4.jpg' %}" class="img-fluid" alt="client-img">
                     </div>
                     <div class="peopl align-self">
                       <h3>Mike Thyson</h3>
