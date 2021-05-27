@@ -2,6 +2,7 @@ from django.db import models
 from django.shortcuts import reverse
 import datetime
 from django.core.exceptions import ValidationError
+from django.utils.html import mark_safe
 # Create your models here.
 
 REGION_CHOICES = [
@@ -49,6 +50,12 @@ class TourGuide(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def thumbnail_preview(self):
+        if self.image:
+            return mark_safe('<img src="{}" width="200" height="200" />'.format(self.image.url))
+        return ""
 
 
 class Tour(models.Model):

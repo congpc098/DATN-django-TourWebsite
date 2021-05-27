@@ -21,33 +21,8 @@
     <div class="grids py-lg-5 py-md-4">
       <div class="container">
         <h3 class="hny-title mb-5">Điểm Đến</h3>
+        
         <div class="row">
-          {% comment %} <div class="col-lg-4 col-md-4 col-6">
-            <div class="column">
-              <a href="blog-single.html"><img src="assets/images/g1.jpg" alt="" class="img-fluid"></a>
-              <div class="info">
-                <h4><a href="blog-single.html">Paris</a></h4>
-                <p>3Days, 4 Nights </p>
-                <div class="dst-btm">
-                  <h6 class="">Start From </h6>
-                  <span>$1750</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-6 mt-md-0">
-            <div class="column">
-              <a href="blog-single.html"><img src="assets/images/g2.jpg" alt="" class="img-fluid"></a>
-              <div class="info">
-                <h4><a href="blog-single.html">Bankok</a></h4>
-                <p>3Days, 4 Nights </p>
-                <div class="dst-btm">
-                  <h6 class="">Start From </h6>
-                  <span>$1690</span>
-                </div>
-              </div>
-            </div>
-          </div> {% endcomment %}
           {% for d in destinations %}
           <div class="col-lg-4 col-md-4 col-6 mt-md-4 mt-4">
             <div class="column">
@@ -55,13 +30,35 @@
               <div class="info">
                 <h4><a href="{{ d.get_absolute_url }}">{{ d.name }}</a></h4>
                 <div class="dst-btm">
-                  <h6 class="">Chỉ từ </h6>
-                  <span>$1650</span>
+                  <h6 class=""> </h6>
+                  <span></span>
                 </div>
               </div>
             </div>
           </div>
           {% endfor %}
+
+          {% if is_paginated %}
+
+            {% if page_obj.has_previous %}
+              <a class="btn btn-outline-info mb-4" href="?page=1">Trang đầu</a>
+              <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Back</a>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+              {% elif num > page_obj.number|add:'-1' and num < page_obj.number|add:'1' %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next%}
+              <a class="btn btn-outline-info mb-4" href="?page={{ page.obj.next_page_number }}">Next</a>
+              <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Trang cuối</a>
+            {% endif %}
+
+          {% endif %}
         </div>
       </div>
     </div>

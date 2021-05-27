@@ -7,6 +7,8 @@ from django.db.models import Q
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string  # render template to body of email
+# pagination
+from django.core.paginator import EmptyPage, Paginator
 # Create your views here.
 
 
@@ -39,10 +41,17 @@ def contact(request):
 
 def destination(request):
     destinations = Destination.objects.all()
+    paginator = Paginator(destinations, 3)
+    page_number = request.GET.get('page', 1)  # set default is page 1
+    try:
+        page_obj = paginator.page(page_number)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)  # nếu số trang ko tồn tại thì lấy trang cuối cùng
     context = {
-        'destinations': destinations,
+        'destinations': destinations,   #: page_obj if use pagination
         'title': 'Điểm Đến - Vietravel',
-        'active3': 'active'
+        'active3': 'active',
+        'page_obj': 'page_obj'
     }
     return render(request, 'destinations.html', context)
 
@@ -98,7 +107,7 @@ def tour_detail(request, pk):
         address = request.POST['inputAddress']
         people = request.POST['inputPeople']
         total = tour.price*int(people)
-        book = Book(customer_name=name, customer_phone=phone, customer_email=email, custumer_addess=address, tour=tour, number_people=people, total_pay=total)
+        book = Book(customer_name=name, customer_phone=phone, customer_email=email, custumer_addess=address, tour=tour, number_people=int(people), total_pay=total)
         book.save()
         request.session['customer_email'] = email
         request.session['tour_id'] = pk

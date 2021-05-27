@@ -16,12 +16,12 @@
               <h6 class="mb-3">Khám phá cuộc phiêu lưu tiếp theo của bạn tại đây</h6>
               <div class="flex-wrap search-wthree-field mt-md-5 mt-4">
 
-                <form action="{% url 'search'  %}" method="GET" class="booking-form">
+                <form action="{% url 'search' %}" method="GET" class="booking-form">
                   <div class="row book-form">
                     <div class="form-input col-md-4 mt-md-0 mt-3">
 
                       <select name="selectpicker" class="selectpicker">
-                        <option value="">Điểm Đến</option>
+                        <option disabled="true" selected>----Điểm Đến----</option>
                         {% for d in destinations %}
                         <option value="{{d}}">{{d}}</option>
                         {% endfor %}
